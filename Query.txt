@@ -1,0 +1,159 @@
+-- QUERIES FOR RRRS DATABASE QUESTION
+-- PART 2 QUERIES
+
+-- Question 2
+
+SELECT P.FIRST_NAME, P.LAST_NAME, B.Status, T.TRAIN_NAME
+FROM BOOKED AS B, PASSENGER AS P, TRAIN AS T
+WHERE T.TRAIN_NAME = 'Flying Scotsman' AND PASSENGER_SSN = SSN AND Status = 'Booked' AND B.TRAIN_NUMBER = T.TRAIN_NUMBER;
+
+FIRST_NAME  LAST_NAME  Status  TRAIN_NAME
+----------  ---------  ------  ---------------
+Josephine   Darakjy    Booked  Flying Scotsman
+Art         Venere     Booked  Flying Scotsman
+Fletcher    Flosi      Booked  Flying Scotsman
+Sage        Wieser     Booked  Flying Scotsman
+Kris        Marrier    Booked  Flying Scotsman
+
+
+--Question 3
+SELECT P.FIRST_NAME, P.LAST_NAME, T.TRAIN_NAME, B.Status
+FROM BOOKED B, TRAIN T, PASSENGER P
+WHERE T.TRAIN_NUMBER = B.TRAIN_NUMBER AND B.STATUS = 'WaitL' AND P.SSN = B.PASSENGER_SSN
+ORDER BY P.FIRST_NAME DESC, P.LAST_NAME DESC;
+
+FIRST_NAME  LAST_NAME  TRAIN_NAME       Status
+----------  ---------  ---------------  ------
+Minna       Amigon     Golden Arrow     WaitL
+Meaghan     Garufi     Golden Arrow     WaitL
+Mattie      Poquette   Golden Arrow     WaitL
+Kiley       Caldarera  Golden Arrow     WaitL
+Graciela    Ruta       Golden Arrow     WaitL
+Cammy       Albares    Golden Arrow     WaitL
+Abel        Maclead    Flying Scotsman  WaitL
+
+
+--Question 4
+DELETE FROM BOOKED 
+WHERE PASSENGER_SSN = 264816896;
+
+UPDATE BOOKED 
+SET STATUS = 'Booked'
+WHERE PASSENGER_SSN = 256558303 AND TRAIN_NUMBER = 3 AND TICKET_TYPE = 'Premium' AND STATUS = 'WaitL';
+
+SELECT * FROM BOOKED;
+
+PASSENGER_SSN  TRAIN_NUMBER  TICKET_TYPE  Status
+-------------  ------------  -----------  ------
+240471168      2             General      Booked
+285200976      4             Premium      Booked
+285200976      2             Premium      Booked
+317434088      2             Premium      Booked
+310908858      2             General      Booked
+322273872      2             General      Booked
+256558303      3             Premium      Booked
+302548590      2             General      WaitL 
+284965676      3             Premium      WaitL 
+277292710      3             General      WaitL 
+331160133      3             General      WaitL 
+331293204      3             General      WaitL 
+290123298      3             General      WaitL 
+286411536      4             Premium      Booked
+294860856      4             Premium      Booked
+317434088      4             Premium      Booked
+310908858      4             Premium      Booked
+322273872      4             Premium      Booked
+256558303      4             Premium      Booked
+302548590      4             Premium      Booked
+284965676      4             General      Booked
+277292710      4             General      Booked
+331160133      4             General      Booked
+331293204      4             General      Booked
+
+
+-- Question 5
+SELECT DISTINCT P.FIRST_NAME, P.LAST_NAME, B.Status, T.AVAILABLE_DAYS, P.SSN, T.TRAIN_NAME
+FROM TRAIN AS T, PASSENGER AS P, BOOKED AS B
+WHERE AVAILABLE_DAYS LIKE '%Sunday%' AND PASSENGER_SSN = SSN AND Status = 'Booked' AND T.TRAIN_NUMBER = B.TRAIN_NUMBER;
+
+FIRST_NAME  LAST_NAME  Status  AVAILABLE_DAYS          SSN        TRAIN_NAME
+----------  ---------  ------  ----------------------  ---------  ---------------
+Josephine   Darakjy    Booked  Friday,Saturday,Sunday  240471168  Flying Scotsman
+Art         Venere     Booked  Saturday,Sunday         285200976  Golden Chariot
+Art         Venere     Booked  Friday,Saturday,Sunday  285200976  Flying Scotsman
+Fletcher    Flosi      Booked  Friday,Saturday,Sunday  317434088  Flying Scotsman
+Sage        Wieser     Booked  Friday,Saturday,Sunday  310908858  Flying Scotsman
+Kris        Marrier    Booked  Friday,Saturday,Sunday  322273872  Flying Scotsman
+Gladys      Rim        Booked  Saturday,Sunday         286411536  Golden Chariot
+Yuki        Whobrey    Booked  Saturday,Sunday         294860856  Golden Chariot
+Fletcher    Flosi      Booked  Saturday,Sunday         317434088  Golden Chariot
+Sage        Wieser     Booked  Saturday,Sunday         310908858  Golden Chariot
+Kris        Marrier    Booked  Saturday,Sunday         322273872  Golden Chariot
+Minna       Amigon     Booked  Saturday,Sunday         256558303  Golden Chariot
+Abel        Maclead    Booked  Saturday,Sunday         302548590  Golden Chariot
+Kiley       Caldarera  Booked  Saturday,Sunday         284965676  Golden Chariot
+Graciela    Ruta       Booked  Saturday,Sunday         277292710  Golden Chariot
+Cammy       Albares    Booked  Saturday,Sunday         331160133  Golden Chariot
+Mattie      Poquette   Booked  Saturday,Sunday         331293204  Golden Chariot
+
+
+
+-- Question 6 
+SELECT TRAIN_NAME, GENERAL_OCCUPIED + PREMIUM_OCCUPIED, PREMIUM_AVAILABLE + GENERAL_AVAILABLE
+FROM TRAIN_STATUS;
+
+TRAIN_NAME         GENERAL_OCCUPIED + PREMIUM_OCCUPIED  PREMIUM_AVAILABLE + GENERAL_AVAILABLE
+-----------------  -----------------------------------  -------------------------------------
+ Orient Express    0                                    20
+ Flying Scottsman  7                                    13
+ Guwahati Express  7                                    13
+ Golden Chariot    11                                   9
+
+-- Question 7
+SELECT P.FIRST_NAME, P.LAST_NAME, T.TRAIN_NAME
+FROM PASSENGER AS P, BOOKED AS B, TRAIN AS T 
+WHERE P.FIRST_NAME = 'Art' AND P.LAST_NAME = 'Venere' AND B.PASSENGER_SSN = P.SSN AND T.TRAIN_NUMBER = B.TRAIN_NUMBER;
+
+FIRST_NAME  LAST_NAME  TRAIN_NAME
+----------  ---------  ---------------
+Art         Venere     Golden Chariot
+Art         Venere     Flying Scotsman
+
+-- Question 8 
+SELECT P.FIRST_NAME, P.LAST_NAME, P.ADDRESS, P.BDATE, T.TRAIN_NUMBER, T.TRAIN_NAME, T.SOURCE_STATION, T.DESTINATION_STATION, B.TICKET_TYPE, B.STATUS
+FROM TRAIN AS T, PASSENGER AS P, BOOKED AS B
+WHERE T.TRAIN_NUMBER = B.TRAIN_NUMBER AND B.PASSENGER_SSN = P.SSN AND 
+P.BDATE < '1972/02/24' AND P.BDATE > '1962/02/24';
+
+FIRST_NAME  LAST_NAME  ADDRESS             bdate       TRAIN_NUMBER  TRAIN_NAME     SOURCE_STATION  DESTINATION_STATION  TICKET_TYPE  Status
+----------  ---------  ------------------  ----------  ------------  -------------  --------------  -------------------  -----------  ------
+James       Butt       6649 N Blue Gum St  1968-10-10  3             Golden Arrow   Victoria        Dover                Premium      Booked
+
+-- Question 9 
+SELECT TRAIN_NAME ,GENERAL_OCCUPIED + PREMIUM_OCCUPIED
+FROM TRAIN_STATUS;
+
+TRAIN_NAME         GENERAL_OCCUPIED + PREMIUM_OCCUPIED
+-----------------  -----------------------------------
+ Orient Express    0
+ Flying Scottsman  7
+ Guwahati Express  7
+ Golden Chariot    11
+
+--Question 10
+SELECT DISTINCT P.FIRST_NAME,P.LAST_NAME, T.AVAILABLE_DAYS, B.TICKET_TYPE
+FROM PASSENGER AS P,BOOKED AS B, TRAIN AS T
+WHERE T.AVAILABLE_DAYS LIKE '%Sunday%' AND T.AVAILABLE_DAYS LIKE '%Saturday%' AND P.SSN = B.PASSENGER_SSN AND B.TICKET_TYPE = 'Premium' AND B.TRAIN_NUMBER =T.TRAIN_NUMBER;
+
+FIRST_NAME  LAST_NAME  AVAILABLE_DAYS          TICKET_TYPE
+----------  ---------  ----------------------  -----------
+Art         Venere     Saturday,Sunday         Premium
+Art         Venere     Friday,Saturday,Sunday  Premium
+Fletcher    Flosi      Friday,Saturday,Sunday  Premium
+Gladys      Rim        Saturday,Sunday         Premium
+Yuki        Whobrey    Saturday,Sunday         Premium
+Fletcher    Flosi      Saturday,Sunday         Premium
+Sage        Wieser     Saturday,Sunday         Premium
+Kris        Marrier    Saturday,Sunday         Premium
+Minna       Amigon     Saturday,Sunday         Premium
+Abel        Maclead    Saturday,Sunday         Premium
