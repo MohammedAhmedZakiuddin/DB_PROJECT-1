@@ -1,6 +1,6 @@
 # DB_PROJECT-1
 
-Which tools you used for the project. (Readme file)
+Tools you used for the project. (Readme file)
 
 The tools that were used for creating this RRS project were 
 -- Microsoft SQL Server Management Studio - 18                                                                                                                                          
