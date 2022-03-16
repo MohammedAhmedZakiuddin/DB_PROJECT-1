@@ -31,7 +31,8 @@ Note: As the system is very large and is not feasible to develop therefore there
 Part 1: ER Diagram
 1. Construct a clean and concise ER diagram for the RRS database. List your assumptions and clearly indicate the cardinality mappings.
 
-Part 2: SQL Queries
+Part 2: 
+SQL Queries
 Write SQL queries to get the results of the following queries:
 2. Enter a train name and retrieve all the passengers with confirmed status travelling in that train.
 3. List all the trains where the waiting list is full along with passengers on the waiting list in descending order.
