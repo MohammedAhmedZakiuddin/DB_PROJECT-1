@@ -26,7 +26,7 @@ This system helps to maintain the records of different trains, the train’s sta
 • Any stops made by a train before its final destination and their bookings are not considered.
 
 Part 1: ER Diagram
-1. Construct a clean and concise ER diagram for the RRS database. List your assumptions and clearly indicate the cardinality mappings.
+Constructing a clean and concise ER diagram for the RRS database.
 
 Part 2: SQL Queries
 
