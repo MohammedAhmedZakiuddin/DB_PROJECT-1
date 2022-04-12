@@ -1,4 +1,4 @@
-# DB_PROJECT-1
+# Database Project
 
 Tools you used for the project. (Readme file)
 
